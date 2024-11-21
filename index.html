@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Table</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 80%;
+        margin: 20px auto;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        text-align: left;
+        padding: 8px;
+      }
+      th {
+        background-color: #f4f4f4;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>User data</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>NAMME</th>
+          <th>USERNAME</th>
+          <th>EMAIL</th>
+          <th>CITY</th>
+        </tr>
+        <tbody>
+
+        </tbody>
+      </thead>
+    </table>
+    <script>
+      //1
+      // async function getData() {
+      //   setTimeout(function () {
+      //     console.log("fechting data");
+      //   }, 3000);
+      // }
+      // getData()
+      //2
+        // async function getdata() {
+        //   setTimeout(function () {
+        //     console.log("wait two seconds");
+        //   },3000);
+        // }
+        // getdata()
+        ////3
+        // async function loadIng (){
+        //   setTimeout(function(){
+        //     console.log("loading")
+        //   },2000)
+        // }
+        // loadIng()
+        // //4
+        // async function loaDing (){
+        //   setTimeout(function(){
+        //     console.log("load")
+        //   },2000)
+        // }
+        // loaDing()
+        ////5
+        // async function loAding(){
+        //   setTimeout(function(){
+        //     console.log("loading wait some time")
+        //   },2000)
+        // }
+        // loAding();
+        async function getData(){
+         let response = fetch("j");
+         console.log(response)
+        }
+    </script>
+  </body>
+</html>
