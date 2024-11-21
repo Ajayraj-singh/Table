@@ -3,77 +3,140 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Table</title>
-    <style>
-      table {
-        border-collapse: collapse;
-        width: 80%;
-        margin: 20px auto;
-      }
-      th,
-      td {
-        border: 1px solid #ddd;
-        text-align: left;
-        padding: 8px;
-      }
-      th {
-        background-color: #f4f4f4;
-      }
-    </style>
+    <title>Catch the Falling Objects Game</title>
+    <!-- <link rel="stylesheet" href="jason/portfolio.css" /> -->
   </head>
-  <body>
-    <h1>User data</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>NAMME</th>
-          <th>USERNAME</th>
-          <th>EMAIL</th>
-          <th>CITY</th>
-        </tr>
-        <tbody>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f0f0;
+    }
 
-        </tbody>
-      </thead>
-    </table>
+    #game-area {
+      width: 300px;
+      height: 500px;
+      border: 2px solid #333;
+      position: relative;
+      overflow: hidden;
+      margin: 20px auto;
+      background-color: #e1e1e1;
+    }
+
+    #basket {
+      width: 60px;
+      height: 20px;
+      background-color: blue;
+      position: absolute;
+      bottom: 0;
+      left: 120px; /* Center the basket */
+    }
+
+    .object {
+      width: 30px;
+      height: 30px;
+      background-color: red;
+      position: absolute;
+      top: -30px; /* Start above the game area */
+    }
+
+    #score {
+      font-size: 20px;
+      margin-top: 10px;
+    }
+
+    #restart-button {
+      margin-top: 10px;
+      padding: 10px;
+    }
+  </style>
+  <body>
+    <h1>Catch the Falling Objects Game</h1>
+    <div id="game-area">
+      <div id="basket"></div>
+    </div>
+    <div id="score">Score: 0</div>
+    <button id="restart-button">Restart</button>
     <script>
-      1
-      async function getData() {
-        setTimeout(function () {
-          console.log("fechting data");
-        }, 3000);
+      const gameArea = document.getElementById("game-area");
+      const basket = document.getElementById("basket");
+      const scoreDisplay = document.getElementById("score");
+      const restartButton = document.getElementById("restart-button");
+
+      let basketPosition = 120; // Initial position of the basket
+      let score = 0;
+      let gameActive = true;
+
+      // Move the basket left and right
+      document.addEventListener("keydown", (event) => {
+        if (!gameActive) return;
+
+        if (event.key === "ArrowLeft" && basketPosition > 0) {
+          basketPosition -= 20;
+          basket.style.left = basketPosition + "px";
+        } else if (event.key === "ArrowRight" && basketPosition < 240) {
+          basketPosition += 20;
+          basket.style.left = basketPosition + "px";
+        }
+      });
+
+      // Create falling objects
+      function createObject() {
+        const object = document.createElement("div");
+        object.classList.add("object");
+        object.style.left = Math.floor(Math.random() * 270) + "px"; // Random position
+        gameArea.appendChild(object);
+
+        moveObject(object);
       }
-      getData()
-      2
-        async function getdata() {
-          setTimeout(function () {
-            console.log("wait two seconds");
-          },3000);
-        }
-        getdata()
-        //3
-        async function loadIng (){
-          setTimeout(function(){
-            console.log("loading")
-          },2000)
-        }
-        loadIng()
-        //4
-        async function loaDing (){
-          setTimeout(function(){
-            console.log("load")
-          },2000)
-        }
-        loaDing()
-        //5
-        async function loAding(){
-          setTimeout(function(){
-            console.log("loading wait some time")
-          },2000)
-        }
-        loAding();
-      
+
+      // Move the falling object down
+      function moveObject(object) {
+        let objectInterval = setInterval(() => {
+          if (!gameActive) {
+            clearInterval(objectInterval);
+            return;
+          }
+
+          let objectPosition = parseInt(object.style.top) || 0;
+          objectPosition += 5;
+          object.style.top = objectPosition + "px";
+
+          // Check for catching the object
+          if (objectPosition > 470) {
+            clearInterval(objectInterval);
+            object.remove();
+          } else if (
+            objectPosition > 450 &&
+            parseInt(object.style.left) >= basketPosition &&
+            parseInt(object.style.left) <= basketPosition + 60
+          ) {
+            score++;
+            scoreDisplay.innerText = "Score: " + score;
+            clearInterval(objectInterval);
+            object.remove();
+          }
+        }, 20);
+      }
+
+      // Start the game
+      function startGame() {
+        gameActive = true;
+        score = 0;
+        scoreDisplay.innerText = "Score: " + score;
+        basketPosition = 120;
+        basket.style.left = basketPosition + "px";
+        gameArea.innerHTML = ""; // Clear previous objects
+        gameArea.appendChild(basket);
+
+        setInterval(createObject, 1000); // Create a new object every second
+      }
+
+      // Restart the game
+      restartButton.addEventListener("click", startGame);
+
+      // Start the game initially
+      startGame();
     </script>
   </body>
 </html>
